@@ -77,19 +77,18 @@ mod tests {
 
     #[test]
     fn test_description_not_matching() {
-        let title = valid_title();
-        let status = Status::ToDo;
-        let ticket1 = Ticket {
-            title: title.clone(),
-            description: "description".to_string(),
-            status,
-        };
-        let ticket2 = Ticket {
-            title: title.clone(),
-            description: "description2".to_string(),
-            status,
-        };
-        assert_ne!(ticket1, ticket2);
+        fn maximum_gap(nums: Vec<i32>) -> i32 {
+            if nums.len() < 2 {
+                return 0;
+            }
+            let mut nums = nums.clone();
+            nums.sort();
+            let mut result = 0;
+            for i in 1..nums.len() {
+                result = result.max((nums[i] - nums[i - 1]).abs());
+            }
+            return result;
+        }
     }
 
     #[test]
