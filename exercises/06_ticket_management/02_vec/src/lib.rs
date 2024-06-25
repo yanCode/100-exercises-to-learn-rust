@@ -11,12 +11,12 @@
 // We expect `fibonacci(0)` to return `0`, `fibonacci(1)` to return `1`,
 // `fibonacci(2)` to return `1`, and so on.
 pub fn fibonacci(n: u32) -> u32 {
-    let n = n ;
+    let n = n as usize;
     let mut memo = vec![0, 1];
     for i in 2..=n {
         memo.push(memo[i - 1] + memo[i - 2])
     }
-    memo[-1]
+    memo[n]
 }
 
 #[cfg(test)]
