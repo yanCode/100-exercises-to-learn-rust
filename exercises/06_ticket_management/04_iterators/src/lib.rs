@@ -8,67 +8,80 @@ use ticket_fields::{TicketDescription, TicketTitle};
 // Hint: you shouldn't have to implement the `Iterator` trait in this case.
 #[derive(Clone)]
 pub struct TicketStore {
-    tickets: Vec<Ticket>,
+  tickets: Vec<Ticket>,
 }
-impl IntoIterator for TicketStore{
-    type Item = Ticket;
-    type IntoIter = IntoIter<Self::Item>;
-    
-    fn into_iter(self) -> Self::IntoIter {
-       self.tickets.into_iter()
-    }
+
+impl IntoIterator for TicketStore {
+  type Item = Ticket;
+  type IntoIter = IntoIter<Self::Item>;
+  
+  fn into_iter(self) -> Self::IntoIter {
+    self.tickets.into_iter()
+  }
+}
+
+fn example_1() {
+  let foo = 69;
+  let mut r;
+  {
+    let x = 42;
+    r = &x;
+    println!("{}", *r)
+  }
+  r = &foo;
+  println!("{}", *r);
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Ticket {
-    pub title: TicketTitle,
-    pub description: TicketDescription,
-    pub status: Status,
+  pub title: TicketTitle,
+  pub description: TicketDescription,
+  pub status: Status,
 }
 
 #[derive(Clone, Debug, Copy, PartialEq)]
 pub enum Status {
-    ToDo,
-    InProgress,
-    Done,
+  ToDo,
+  InProgress,
+  Done,
 }
 
 impl TicketStore {
-    pub fn new() -> Self {
-        Self {
-            tickets: Vec::new(),
-        }
+  pub fn new() -> Self {
+    Self {
+      tickets: Vec::new(),
     }
-
-    pub fn add_ticket(&mut self, ticket: Ticket) {
-        self.tickets.push(ticket);
-    }
+  }
+  
+  pub fn add_ticket(&mut self, ticket: Ticket) {
+    self.tickets.push(ticket);
+  }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use ticket_fields::test_helpers::{ticket_description, ticket_title};
-
-    #[test]
-    fn add_ticket() {
-        let mut store = TicketStore::new();
-
-        let ticket = Ticket {
-            title: ticket_title(),
-            description: ticket_description(),
-            status: Status::ToDo,
-        };
-        store.add_ticket(ticket);
-
-        let ticket = Ticket {
-            title: ticket_title(),
-            description: ticket_description(),
-            status: Status::InProgress,
-        };
-        store.add_ticket(ticket);
-
-        let tickets: Vec<_> = store.clone().into_iter().collect();
-        assert_eq!(tickets, store.tickets);
-    }
+  use super::*;
+  use ticket_fields::test_helpers::{ticket_description, ticket_title};
+  
+  #[test]
+  fn add_ticket() {
+    let mut store = TicketStore::new();
+    
+    let ticket = Ticket {
+      title: ticket_title(),
+      description: ticket_description(),
+      status: Status::ToDo,
+    };
+    store.add_ticket(ticket);
+    
+    let ticket = Ticket {
+      title: ticket_title(),
+      description: ticket_description(),
+      status: Status::InProgress,
+    };
+    store.add_ticket(ticket);
+    
+    let tickets: Vec<_> = store.clone().into_iter().collect();
+    assert_eq!(tickets, store.tickets);
+  }
 }
