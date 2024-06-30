@@ -65,4 +65,15 @@ mod tests {
     assert_eq!(todos.len(), 1);
     assert_eq!(todos[0], &todo);
   }
+  
+  #[test]
+  fn number_test() {
+    let numbers = vec![1, 2, 3, 4, 5];
+    let outcome: Vec<i32> = numbers.iter()
+      .filter(|s| *s%2 == 0)
+      .map(|s| s + 1)
+      .collect();
+    println!("the outcome is: {:?}", outcome);
+    println!("number 1 is: {}", numbers[1])
+  }
 }
